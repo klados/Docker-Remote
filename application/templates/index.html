@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if not session['username'] %}
+        <div class="container">
+            <h3 class="mt-2">Welcome</h3>
+            <div>This is a simple project to interact with docker via the browser.</div>
+            <small>If you would like to contribute check <a target="_blank"
+                                                            href="http://www.github.com">Here</a></small>
+        </div>
+    {% else %}
+
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    {% if session['role'] == 'user' %}
+                        You are a simple user <br>
+                        You are able to view all that images of the pc and the running containers
+                    {% elif session['role'] == 'admin' %}
+                        You are an admin <br>
+                        You can view all the images and running containers of the pc.
+                        You can also remove images and stop containers <br>
+                        <small>Be careful</small>
+                    {% elif session['role'] == 'superAdmin' %}
+                        You are a GOD
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+

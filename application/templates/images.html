@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <h3 class="mt-2 text-center">Images</h3>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Tag Name</th>
+                <th scope="col">Id</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Container</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for image in listImage %}
+                <tr scope="row">
+                    <td>
+                        {% if image[0]|length == 0 %}
+                            -
+                        {% else %}
+                            {{ image[0] }}
+                        {% endif %}
+                    </td>
+                    <td>{{ image[1] }}</td>
+                    <td>{{ image[2] }}</td>
+                    <td>{{ image[3] }}</td>
+                    <td>
+                        <form action="{{ url_for('deleteImage') }}" method="POST">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                            <input type="hidden" name="imageId" value="{{ image[1] }}">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="">
+                <ul class="pagination">
+                    {% for i in range(1, totalPages) %}
+                        <li class="page-item {% if i == request.args.get('page', default=1)|int %} active {% endif %}">
+                            <a href="{{ url_for('images', page=i) }}" class="page-link">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+
+
+    </div>
+
+{% endblock %}
