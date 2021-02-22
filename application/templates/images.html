@@ -30,8 +30,9 @@
                     <td>{{ image[3] }}</td>
                     <td>
                         <form action="{{ url_for('deleteImage') }}" method="POST">
-                            <button class="btn btn-danger" type="submit">Delete</button>
-                            <input type="hidden" name="imageId" value="{{ image[1] }}">
+                            {{ form.csrf_token }}
+                            {{ form.imageId(type="hidden", value=image[1]) }}
+                            {{ form.submit(class_="btn btn-danger") }}
                         </form>
                     </td>
                 </tr>

@@ -2,6 +2,7 @@ from application import app
 from flask import render_template, request, redirect, url_for, flash, session
 from application.services.dockerServiceApi import DockerServiceApi
 from application.forms.auth import LoginForm, RegisterForm
+from application.forms.simpleValidators import DeleteImageForm
 from application.services.authService import AuthService
 from application.midleware.authMidleware import login_required
 from . import db
@@ -63,14 +64,20 @@ def images():
     docker = DockerServiceApi()
     listImage = docker.getAllInstalledImages()
     totalPages = math.ceil(len(listImage) / perPage) + 1
+    form = DeleteImageForm()
     return render_template("images.html", images=True, totalPages=totalPages,
-                           listImage=listImage[offset: offset + perPage])
+                           listImage=listImage[offset: offset + perPage], form=form)
 
 
 @app.route('/deleteImage', methods=['POST'])
 @login_required
+# @role_required(['admin'])
 def deleteImage():
-    print('delete image', request.form)
+    form = DeleteImageForm()
+    if form.validate_on_submit():
+        print('ready to delete ', request.form)
+    else:
+        flash("Failed to delete image", "danger")
     return redirect(url_for('images'))
 
 
