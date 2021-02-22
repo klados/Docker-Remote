@@ -1,4 +1,5 @@
 import docker
+from dateutil import parser
 
 
 class DockerServiceApi:
@@ -10,9 +11,9 @@ class DockerServiceApi:
         """same as docker images ls"""
         listOfImages = []
         for image in self.client.images.list():
-            # print(image.__dict__)
             # print(image.attrs['RepoTags'], image.attrs['Id'], image.attrs['Created'], image.attrs['Container'])
-            listOfImages.append([image.attrs['RepoTags'], image.attrs['Id'], image.attrs['Created']])
+            listOfImages.append(
+                [image.attrs['RepoTags'], image.attrs['Id'], parser.isoparse(image.attrs['Created']).strftime('%d/%m/%Y %H:%M')])
         return listOfImages
 
     def getAllRunningContainers(self):
