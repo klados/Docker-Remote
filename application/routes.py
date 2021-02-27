@@ -75,7 +75,12 @@ def images():
 def deleteImage():
     form = DeleteImageForm()
     if form.validate_on_submit():
-        print('ready to delete ', request.form)
+        docker = DockerServiceApi()
+        res = docker.deleteImageById(request.form['imageId'])
+        if res:
+            flash("Image delete successfully", "success")
+        else:
+            flash("Error, image still exists", "danger")
     else:
         flash("Failed to delete image", "danger")
     return redirect(url_for('images'))

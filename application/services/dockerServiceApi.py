@@ -16,6 +16,13 @@ class DockerServiceApi:
                                  parser.isoparse(image.attrs['Created']).strftime('%d/%m/%Y %H:%M')])
         return listOfImages
 
+    def deleteImageById(self, image_id):
+        try:
+            self.client.images.remove(image=image_id)
+            return True
+        except:
+            return False
+
     def getAllRunningContainers(self):
         for container in self.client.containers.list():
             print(container)
