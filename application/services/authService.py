@@ -10,7 +10,6 @@ class AuthService:
 
     def loginService(self, data):
         user = self.userResource.getUserByEmail(data['email'])
-        print(user, data['password'])
         if user:
             if user.getPassword(data['password']):
                 return {'status': 'success', 'username': user.username, 'role': user.role}

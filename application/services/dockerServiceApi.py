@@ -12,8 +12,8 @@ class DockerServiceApi:
         listOfImages = []
         for image in self.client.images.list():
             # print(image.attrs['RepoTags'], image.attrs['Id'], image.attrs['Created'], image.attrs['Container'])
-            listOfImages.append(
-                [image.attrs['RepoTags'], image.attrs['Id'], parser.isoparse(image.attrs['Created']).strftime('%d/%m/%Y %H:%M')])
+            listOfImages.append([image.attrs['RepoTags'], image.attrs['Id'],
+                                 parser.isoparse(image.attrs['Created']).strftime('%d/%m/%Y %H:%M')])
         return listOfImages
 
     def getAllRunningContainers(self):
