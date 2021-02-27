@@ -1,4 +1,4 @@
 env/
-.flaskenv
+.env
 .idea/
 application/__pycache__/
