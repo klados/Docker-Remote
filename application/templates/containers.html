@@ -2,9 +2,56 @@
 
 {% block content %}
 
-<div class="container">
-    <h3 class="mt-2 text-center">Containers</h3>
+    <div class="container">
+        <h3 class="mt-2 text-center">Containers</h3>
 
-</div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Container Id</th>
+                    <th scope="col">Created at</th>
+                    <th scope="col">Image Name</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Command</th>
+                    <th scope="col">Stop</th>
+                    <th scope="col">Show Logs</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for container in listContainers %}
+                    <tr scope="row">
+                        <td>{{ container['id'][7:19] }}</td>
+                        <td>{{ container['createdAt'] }}</td>
+                        <td>{{ container['image'][7:19] }}</td>
+                        <td>{{ container['name']}}</td>
+                        <td>{{ container['state']['Status'] }}</td>
+                        <td>{{ container['command'] }}</td>
+                        <td>
+                            <button class="btn btn-warning">Stop</button>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-info">Open</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="">
+                <ul class="pagination">
+                    {% for i in range(1, totalPages) %}
+                        <li class="page-item {% if i == request.args.get('page', default=1)|int %} active {% endif %}">
+                            <a href="{{ url_for('images', page=i) }}" class="page-link">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
 
 {% endblock %}

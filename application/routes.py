@@ -90,7 +90,13 @@ def deleteImage():
 @app.route("/containers")
 @login_required
 def containers():
+    page = request.args.get('page', default=1, type=int)
+    perPage = 10
+    offset = (page - 1) * perPage
     docker = DockerServiceApi()
     listContainers = docker.getAllRunningContainers()
+    totalPages = math.ceil(len(listContainers) / perPage) + 1
+
     print(listContainers)
-    return render_template("containers.html", containers=True, listContainers=listContainers)
+    return render_template("containers.html", totalPages=totalPages, containers=True,
+                           listContainers=listContainers[offset: offset + perPage])

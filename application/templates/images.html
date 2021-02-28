@@ -6,40 +6,40 @@
         <h3 class="mt-2 text-center">Images</h3>
 
         <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Tag Name</th>
-                <th scope="col">Id</th>
-                <th scope="col">Created at</th>
-                <th scope="col">Container</th>
-                <th scope="col">Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for image in listImage %}
-                <tr scope="row">
-                    <td>
-                        {% if image[0]|length == 0 %}
-                            -
-                        {% else %}
-                            {{ image[0] }}
-                        {% endif %}
-                    </td>
-                    <td>{{ image[1][7:19] }}</td>
-                    <td>{{ image[2] }}</td>
-                    <td>{{ image[3] }}</td>
-                    <td>
-                        <form action="{{ url_for('deleteImage') }}" method="POST">
-                            {{ form.csrf_token }}
-                            {{ form.imageId(type="hidden", value=image[1]) }}
-                            {{ form.submit(class_="btn btn-danger") }}
-                        </form>
-                    </td>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Tag Name</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Created at</th>
+                    <th scope="col">Container</th>
+                    <th scope="col">Delete</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for image in listImage %}
+                    <tr scope="row">
+                        <td>
+                            {% if image[0]|length == 0 %}
+                                -
+                            {% else %}
+                                {{ image[0] }}
+                            {% endif %}
+                        </td>
+                        <td>{{ image[1][7:19] }}</td>
+                        <td>{{ image[2] }}</td>
+                        <td>{{ image[3] }}</td>
+                        <td>
+                            <form action="{{ url_for('deleteImage') }}" method="POST">
+                                {{ form.csrf_token }}
+                                {{ form.imageId(type="hidden", value=image[1]) }}
+                                {{ form.submit(class_="btn btn-danger") }}
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
 
         <div class="d-flex justify-content-center">
