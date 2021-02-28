@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+
+        <h3 class="my-2 text-center">Logs {{ request.container_id }}</h3>
+
+        {% if not logs %}
+            <div class="alert alert-info text-center">
+                No logs found :)
+            </div>
+        {% endif %}
+
+        {#    {{ logs }}#}
+        <ul class="list-group">
+            {% for log in logs %}
+                <li class="list-group-item">{{ log }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+{% endblock %}

@@ -94,9 +94,18 @@ def containers():
     perPage = 10
     offset = (page - 1) * perPage
     docker = DockerServiceApi()
-    listContainers = docker.getAllRunningContainers()
+    listContainers = docker.getAllContainers()
     totalPages = math.ceil(len(listContainers) / perPage) + 1
 
-    print(listContainers)
     return render_template("containers.html", totalPages=totalPages, containers=True,
                            listContainers=listContainers[offset: offset + perPage])
+
+
+@app.route("/containerLogs/<container_id>")
+@login_required
+def containerLogs(container_id: str):
+    docker = DockerServiceApi()
+    logs = docker.getLogsFromContainerById(container_id).decode('ascii')
+    logs = logs.splitlines()
+    # print(logs)
+    return render_template("logs.html", logs=logs)
