@@ -5,7 +5,6 @@ from dateutil import parser
 class DockerServiceApi:
     def __init__(self):
         self.client = docker.from_env()
-        print(self.client.containers.list()[0].__dict__)
 
     def getAllInstalledImages(self):
         """same as docker images ls"""
