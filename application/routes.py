@@ -5,6 +5,7 @@ from application.forms.auth import LoginForm, RegisterForm
 from application.forms.simpleValidators import DeleteImageForm
 from application.services.authService import AuthService
 from application.midleware.authMidleware import login_required
+from application.midleware.rolePermissionMidleware import role_required
 from . import db
 import math
 
@@ -71,7 +72,7 @@ def images():
 
 @app.route('/deleteImage', methods=['POST'])
 @login_required
-# @role_required(['admin'])
+@role_required(['admin', 'superAdmin'])
 def deleteImage():
     form = DeleteImageForm()
     if form.validate_on_submit():
